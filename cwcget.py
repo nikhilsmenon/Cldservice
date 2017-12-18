@@ -131,7 +131,7 @@ def main():
               print "update operatio"
               dict.clear()
               dict["name"] = cwc_key
-	      dict["value"] = "modifiedcfgsvc"
+	      dict["value"] = cwc_value
 	      json_body = json.dumps(dict)
 	      modify_value(CustomerId, json_body, cwc_key)
 
