@@ -13,7 +13,7 @@ SERVICE_NAME = os.environ['CW_SERVICE_NAME']
 #### DONOT PUBLISH ABOVE THIS  ############
 platform_url = "https://credentialwallet.ctxwsstgapi.net"
 requests.adapters.DEFAULT_RETRIES = 5
-      
+filename = "cwckeys.env"      
 def print_status(resp, succ_code, succ_message, error_message):
 	if (resp.status_code == succ_code):
 		print succ_message
@@ -38,6 +38,7 @@ def get_value(CustomerId, key):
 	if (resp.status_code == 200):
 		res_obj = json.loads(resp.content)
 		print res_obj["name"], ':', res_obj["value"]
+                return res_obj["value"]
 	else:
 		print_status(resp, 200, "", "Value not found ")	
 
@@ -53,14 +54,20 @@ def get_all_values(CustomerId):
 	#print resp.content
 	if (resp.status_code == 200):
 		res_obj = json.loads(resp.content)
+                if os.path.exists(filename):
+                        f = file(filename, "r+")
+                        f.seek(0)
+                        f.truncate()
 		for pair in res_obj["items"]:
 			#print pair
 			#print pair["name"] , ':',  pair["value"] 
 			# pair["value"] is returned as NULL , so you need to make a specific query
-			get_value(CustomerId, pair["name"])
+			value = get_value(CustomerId, pair["name"])
+                        f = file(filename, "a+")
+                        f.write(pair["name"] + "=" + value + "\n")
+    
 	else:
 		print_status(resp, 200, "", "Values not found ")		
-	
 	print "*************"
 
 	
@@ -102,6 +109,7 @@ def main():
 	CustomerId=sys.argv[1]
         cwc_operation=sys.argv[2]
         cwc_key=sys.argv[3]
+        cwc_value=sys.argv[4]
         #print os.environ['CW_PRIVATE_KEY']
 	if (cwc_operation == "getall" ):
                print "get all operation"
@@ -115,7 +123,7 @@ def main():
                 dict.clear()
 		value = "cfgsvc"
 		dict["name"] = cwc_key
-		dict["value"] = value
+		dict["value"] = cwc_value
 		json_body = json.dumps(dict)
 		print json_body
 		create_value(CustomerId, json_body)
