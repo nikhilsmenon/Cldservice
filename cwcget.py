@@ -6,6 +6,9 @@ import requests
 import json
 import sys
 import os
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 #### DONOT PUBLISH  BELOW THIS ############
 SERVICE_KEY = os.environ['CW_PRIVATE_KEY']
@@ -13,12 +16,29 @@ SERVICE_NAME = os.environ['CW_SERVICE_NAME']
 #### DONOT PUBLISH ABOVE THIS  ############
 platform_url = "https://credentialwallet.ctxwsstgapi.net"
 requests.adapters.DEFAULT_RETRIES = 5
-filename = "cwckeys.env"      
+filename = "cwckeys.env"    
+key_regexp=0  
+
+def requests_retry_session(retries=3,backoff_factor=0.3,status_forcelist=(500, 502, 504),session=None):
+    session = session or requests.Session()
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+    return session
+
 def print_status(resp, succ_code, succ_message, error_message):
 	if (resp.status_code == succ_code):
 		print succ_message
 	else:
-		print error_message + " " + str(resp.status_code) 
+		print error_message + " " + str(resp.status_code)
+ 
 			
 	      
 
@@ -33,8 +53,10 @@ def get_cwc_auth_headers(targetUrl):
 def get_value(CustomerId, key):
 	targetUrl = platform_url+ '/'+ CustomerId+"/secrets/"+key	
 	auth_hdr = get_cwc_auth_headers(targetUrl)
-	
-	resp = requests.get(targetUrl, headers=auth_hdr, timeout=300)
+        s = requests.Session()
+	s.auth = auth_hdr
+	#resp = requests.get(targetUrl, headers=auth_hdr, timeout=300)
+        resp= requests_retry_session().get(targetUrl, headers=auth_hdr, timeout=300)
 	if (resp.status_code == 200):
 		res_obj = json.loads(resp.content)
 		print res_obj["name"], ':', res_obj["value"]
@@ -45,10 +67,13 @@ def get_value(CustomerId, key):
 
 
 def get_all_values(CustomerId):
+       
 	targetUrl = platform_url+ '/'+ CustomerId+"/secrets"
 	auth_hdr = get_cwc_auth_headers(targetUrl)
 	resp = requests.get(targetUrl, headers=auth_hdr, timeout=300)
-
+        
+       
+        #s.headers.update({'x-test': 'true'})
 	#print resp
 	print "*************"
 	#print resp.content
@@ -58,13 +83,22 @@ def get_all_values(CustomerId):
                         f = file(filename, "r+")
                         f.seek(0)
                         f.truncate()
+                print "expresion : " + str(key_regexp)
 		for pair in res_obj["items"]:
 			#print pair
 			#print pair["name"] , ':',  pair["value"] 
 			# pair["value"] is returned as NULL , so you need to make a specific query
-			value = get_value(CustomerId, pair["name"])
-                        f = file(filename, "a+")
-                        f.write(pair["name"] + "=" + value + "\n")
+                        key=pair["name"]
+                        if (key_regexp != 0):
+                           if key.startswith(key_regexp):
+			      value = get_value(CustomerId, pair["name"])
+                              f = file(filename, "a+")
+                              f.write(pair["name"] + "=" + value + "\n")
+                        else:
+                            value = get_value(CustomerId, pair["name"])
+                            f = file(filename, "a+")
+                            f.write(pair["name"] + "=" + value + "\n")
+
     
 	else:
 		print_status(resp, 200, "", "Values not found ")		
@@ -105,10 +139,12 @@ def delete_value(CustomerId,  key):
 
 
 def main():
+        global key_regexp
         dict = {}
 	CustomerId=sys.argv[1]
         cwc_operation=sys.argv[2]
         cwc_key=sys.argv[3]
+        key_regexp=sys.argv[3]
         cwc_value=sys.argv[4]
         #print os.environ['CW_PRIVATE_KEY']
 	if (cwc_operation == "getall" ):
