@@ -10,7 +10,7 @@ export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export ENVIRONMENT_KEYS="/etc/environment"
 export BOOTSTRAP_DIR="/var/cfgsvc"
-export ECR_KEYS="/var/cfgsvc/ecr.env"
+export ECR_KEYS="/var/ecr.env"
 export BUILD_FILE="/var/cfgsvc/build"
 export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
 
@@ -143,7 +143,7 @@ echo "-------------------------------sourcing the the env files-----------------
 cat $ECR_KEYS >> $ENVIRONMENT_KEYS
 source /etc/environment
 echo "the userdata are  are copied to /etc/env"
-exit 1
+
 echo "-------------------------pulling the script---------------------------------------------"
 
 if [[ "$pop_type" == "mgmt" ]];then
