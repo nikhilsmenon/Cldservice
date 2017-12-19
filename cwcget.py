@@ -11,8 +11,8 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 #### DONOT PUBLISH  BELOW THIS ############
-SERVICE_KEY = os.environ['CW_PRIVATE_KEY']
-SERVICE_NAME = os.environ['CW_SERVICE_NAME']
+SERVICE_KEY = os.environ['CFGSVC_CW_PRIVATE_KEY']
+SERVICE_NAME = os.environ['CFGSVC_CW_SERVICE_NAME']
 SERVICE_NAME= SERVICE_NAME.replace("\"", "")
 SERVICE_KEY = SERVICE_KEY.replace("\"","")
 #### DONOT PUBLISH ABOVE THIS  ############
