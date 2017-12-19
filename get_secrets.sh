@@ -57,7 +57,7 @@ fi
 if [[ $docker_exec == *"pass"* ]]; then
   echo "Downloading from CWC is completed"
   docker cp cwcget:/app/cfgsvc/cwckeys.env $BOOTSTRAP_DIR
-  grep '^TST_' cwckeys.env > tmp.env
+  grep '^TST_' $BOOTSTRAP_DIR/cwckeys.env > $BOOTSTRAP_DIR/tmp.env
   sed 's/^.\{,4\}//' $BOOTSTRAP_DIR/cwckeys.env > $SECRETS_KEYS
   grep '^'$1'_SSH' $BOOTSTRAP_DIR/cwckeys.env > $BOOTSTRAP_DIR/tmp.env
   sed 's/^.\{,12\}//' $BOOTSTRAP_DIR/tmp.env > $SSH_KEYS 
