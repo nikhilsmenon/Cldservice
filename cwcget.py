@@ -13,6 +13,8 @@ from requests.packages.urllib3.util.retry import Retry
 #### DONOT PUBLISH  BELOW THIS ############
 SERVICE_KEY = os.environ['CW_PRIVATE_KEY']
 SERVICE_NAME = os.environ['CW_SERVICE_NAME']
+SERVICE_NAME= SERVICE_NAME.replace("\"", "")
+SERVICE_KEY = SERVICE_KEY.replace("\"","")
 #### DONOT PUBLISH ABOVE THIS  ############
 platform_url = "https://credentialwallet.ctxwsstgapi.net"
 requests.adapters.DEFAULT_RETRIES = 5
@@ -59,7 +61,7 @@ def get_value(CustomerId, key):
         resp= requests_retry_session().get(targetUrl, headers=auth_hdr, timeout=300)
 	if (resp.status_code == 200):
 		res_obj = json.loads(resp.content)
-		print res_obj["name"], ':', res_obj["value"]
+		#print res_obj["name"], ':', res_obj["value"]
                 return res_obj["value"]
 	else:
 		print_status(resp, 200, "", "Value not found ")	
@@ -75,7 +77,7 @@ def get_all_values(CustomerId):
        
         #s.headers.update({'x-test': 'true'})
 	#print resp
-	print "*************"
+	#print "*************"
 	#print resp.content
 	if (resp.status_code == 200):
 		res_obj = json.loads(resp.content)
@@ -83,7 +85,7 @@ def get_all_values(CustomerId):
                         f = file(filename, "r+")
                         f.seek(0)
                         f.truncate()
-                print "expresion : " + str(key_regexp)
+                #print "expresion : " + str(key_regexp)
 		for pair in res_obj["items"]:
 			#print pair
 			#print pair["name"] , ':',  pair["value"] 
@@ -148,7 +150,7 @@ def main():
         cwc_value=sys.argv[4]
         #print os.environ['CW_PRIVATE_KEY']
 	if (cwc_operation == "getall" ):
-               print "get all operation"
+               #print "get all operation"
                get_all_values(CustomerId)
         if (cwc_operation == "getvalue" ):
 	       print "get operation"
