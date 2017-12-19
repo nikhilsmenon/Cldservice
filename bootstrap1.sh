@@ -154,6 +154,7 @@ if [[ "$pop_type" == "mgmt" ]];then
     else
       curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_mp.sh  -o $BOOTSTRAP_DIR/install_mp.sh
       chmod 777 $BOOTSTRAP_DIR/install_mp.sh
+      dos2unix $BOOTSTRAP_DIR/install_mp.sh
       bash $BOOTSTRAP_DIR/install_mp.sh
    fi
 
@@ -164,11 +165,14 @@ if [[ "$pop_type" == "data" ]];then
    else
     curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_sb.sh  -o $BOOTSTRAP_DIR/install_sb.sh
     chmod 777 $BOOTSTRAP_DIR/install_sb.sh
+    dos2unix $BOOTSTRAP_DIR/install_sb.sh
     bash $BOOTSTRAP_DIR/install_sb.sh
    fi
    if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_dp.sh; bash $BOOTSTRAP_DIR/install_dp.sh ;
    else
      curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_dp.sh  -o $BOOTSTRAP_DIR/install_dp.sh
+     chmod 777 $BOOTSTRAP_DIR/install_dp.sh
+     dos2unix $BOOTSTRAP_DIR/install_dp.sh
      bash $BOOTSTRAP_DIR/install_dp.sh
    fi
 fi
