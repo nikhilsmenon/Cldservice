@@ -4,7 +4,7 @@ export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export SECRET_DIR="/var/cfgsvc"
 export BOOTSTRAP_DIR="/var/cfgsvc"
-source /etc/environment
+source /var/ecr.env
 
 aws configure set aws_access_key_id $access_key
 aws configure set aws_secret_access_key $secret_key
@@ -27,8 +27,10 @@ fi
 CURR_HOST=`hostname -I | cut -d' ' -f1`
 echo "$CURR_HOST"
 if [ ! -f "$BOOTSTRAP_DIR/cwckeys.env"  ]; then
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pguser -e POSTGRES_DB=mpsdb -e  POSTGRES_USER=mpsroot --name localdb postgres 
-docker run -d -it --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -e TRUST_SVC_AUTH="CWSAuth"   -e MESSAGING_SERVER_URL="djehdje" --env-file ecr.env -e DB_USER=mpsroot  -e DB_PORT=5432 -e DB_HOST=$CURR_HOST -e DB_PASS=pguser -e DB_NAME=mpsdb  -p 5000:5000 -p 5002:5002 --name cwcget $cwc_image
+docker run -d -it --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -e TRUST_SVC_AUTH="CWSAuth"   -e MESSAGING_SERVER_URL="djehdje" --env-file /var/ecr.env -e DB_USER=mpsroot  -e DB_PORT=5432 -e DB_HOST=$CURR_HOST -e DB_PASS=pguser -e DB_NAME=mpsdb  -p 5000:5000 -p 5002:5002 --name cwcget $cwc_image
 docker wait cwcget
 docker cp $BOOTSTRAP_DIR/cwcget.py cwcget:/app/cfgsvc
 fi
