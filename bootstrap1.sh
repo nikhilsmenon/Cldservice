@@ -125,22 +125,23 @@ echo "AUTHORIZED_KEYS_PATH:$AUTHORIZED_KEYS"
 echo "SECRETS_KEYS_PATH :$SECRETS_KEYS"
 echo "SSHKEYS_PATH: $SSH_KEYS"
 
-if [ -f  $SSH_KEYS ]; then 
- if [ ! -s $SSH_KEYS ]; then 
+
+if [ -f  $SSH_KEYS ]; then
+ if [ ! -s $SSH_KEYS ]; then
     cat $SSH__KEYS > $AUTHORIZED_KEYS
   fi
-fi 
-if [ -f $SECRETS_KEYS ]; then 
- cat $SECRETS_KEYS >> $ENVIRONMENT_KEYS
+fi
+if [ -f $SECRETS_KEYS ]; then
+ cat $SECRETS_KEYS
 fi
 
 fileecount=`find $BOOTSTRAP_DIR -type f | wc -l`
 if [[ "$fileecount" == "1" ]]; then
 echo ""  #    rm -rf /var/cfgsvc_config
-fi 	
+fi
 
 echo "-------------------------------sourcing the the env files---------------------------"
-cat $ECR_KEYS >> $ENVIRONMENT_KEYS
+cat $ECR_KEYS
 source /etc/environment
 echo "the userdata are  are copied to /etc/env"
 
@@ -148,29 +149,30 @@ echo "-------------------------pulling the script-------------------------------
 
 if [[ "$pop_type" == "mgmt" ]];then
    echo "pulling mgmt pop install script "
-   if [ -f $BOOTSTRAP_DIR/install_mp.sh ]; then bash $BOOTSTRAP_DIR/install_mp.sh ; fi
+   if [ -f $BOOTSTRAP_DIR/install_mp.sh ]; then chmod 777 $BOOTSTRAP_DIR/install_mp.sh; bash $BOOTSTRAP_DIR/install_mp.sh ;
    #if [  -f $BOOTSTRAP_DIR/install_mp.sh  ]; then echo "removing the existing files ";rm -rf $BOOTSTRAP_DIR/install_mp.sh; fi
-  if [[  "bootstrap_status"  == "0" ]]; then 
+    else
       curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_mp.sh  -o $BOOTSTRAP_DIR/install_mp.sh
-   fi
       chmod 777 $BOOTSTRAP_DIR/install_mp.sh
       bash $BOOTSTRAP_DIR/install_mp.sh
-  
+   fi
+
 fi
 if [[ "$pop_type" == "data" ]];then
    echo "pulling data pop install script "
-   if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then  bash  $BOOTSTRAP_DIR/install_sb.sh ; fi
-   if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then bash $BOOTSTRAP_DIR/install_dp.sh ; fi
-   #if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then echo "removing the existing files : dp"; rm -rf  $BOOTSTRAP_DIR/install_dp.sh; fi
-   #if [  -f $BOOTSTRAP_DIR/install_sb.sh  ]; then echo "removing the existing file :sb"; rm -rf $BOOTSTRAP_DIR/install_sb.sh; fi
-   if [[ "$bootstrap_status" == "0" ]]; then 
-      curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_dp.sh  -o $BOOTSTRAP_DIR/install_dp.sh
-      curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_sb.sh  -o $BOOTSTRAP_DIR/install_sb.sh
-      chmod 777 *.sh
-      sh  $BOOTSTRAP_DIR/install_sb.sh
-      sh  $BOOTSTRAP_DIR/install_dp.sh
+   if [  -f $BOOTSTRAP_DIR/install_sb.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_sb.sh; bash $BOOTSTRAP_DIR/install_sb.sh ;
+   else
+    curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_sb.sh  -o $BOOTSTRAP_DIR/install_sb.sh
+    chmod 777 $BOOTSTRAP_DIR/install_sb.sh
+    bash $BOOTSTRAP_DIR/install_sb.sh
+   fi
+   if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_dp.sh; bash $BOOTSTRAP_DIR/install_dp.sh ;
+   else
+     curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_dp.sh  -o $BOOTSTRAP_DIR/install_dp.sh
+     bash $BOOTSTRAP_DIR/install_dp.sh
    fi
 fi
+
 
 fileecount=`find $BOOTSTRAP_DIR -type f | wc -l`
 if [[ "$fileecount" == "2" || "$fileecount" == "3" ]]; then
