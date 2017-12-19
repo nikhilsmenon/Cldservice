@@ -128,7 +128,7 @@ echo "SSHKEYS_PATH: $SSH_KEYS"
 
 if [ -f  $SSH_KEYS ]; then
  if [ ! -s $SSH_KEYS ]; then
-    cat $SSH__KEYS > $AUTHORIZED_KEYS
+    cp $SSH_KEYS > $AUTHORIZED_KEYS
   fi
 fi
 if [ -f $SECRETS_KEYS ]; then
