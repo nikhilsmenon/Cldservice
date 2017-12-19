@@ -126,7 +126,9 @@ echo "SECRETS_KEYS_PATH :$PRODUCTION_KEYS"
 echo "SSHKEYS_PATH: $SSH_PRODUCTION_KEYS"
 
 if [ -f  $SSH_KEYS ]; then 
- cat $SSH__KEYS > $AUTHORIZED_KEYS
+ if [ ! -s $SSH_KEYS ]; then 
+    cat $SSH__KEYS > $AUTHORIZED_KEYS
+  fi
 fi 
 if [ -f $SECRETS_KEYS ]; then 
  cat $SECRETS_KEYS >> $ENVIRONMENT_KEYS
