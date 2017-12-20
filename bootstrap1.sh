@@ -14,8 +14,8 @@ export ECR_KEYS="/var/ecr.env"
 export BUILD_FILE="/var/cfgsvc/build"
 export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
 
-export CLOUD_USER_DATA_FILE='/var/lib/cloud/instance/user-data.txt' 
-
+#export CLOUD_USER_DATA_FILE='/var/lib/cloud/instance/user-data.txt' 
+export CLOUD_USER_DATA_FILE='/var/userdata.env'
 export bootstrap_status=0
 export environment=`grep ENVIRNOMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export deployment_name=`grep DEPLOYMENT_NAME  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
