@@ -52,6 +52,10 @@ fi
 if [ ! -f "$BOOTSTRAP_DIR/cwckeys.env"  ]; then
    #docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' " && echo "pass" || echo "fail"`
    docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
+   docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
+   docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
+   docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
+   docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
 else
  docker_exec="pass"
 fi
@@ -65,6 +69,7 @@ if [[ $docker_exec == *"pass"* ]]; then
 
 else
    echo "Failed in downloading a keys from CWC"
+   docker_exec=`docker exec -i cwcget bash -c "python cwcget.py cfgsvccwc getall $1 '' > log.txt " && echo "pass" || echo "fail" > log.txt`
 fi 
 
 #docker exec -it cwcget python cwcget.py cfgsvccwc upload test11 $x
