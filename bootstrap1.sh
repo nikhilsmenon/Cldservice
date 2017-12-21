@@ -5,7 +5,7 @@ export USER_NAME='nsroot'
 export USER_DATA_ENV="/var/cfgsvc/user_data.env"
 export CLOUD_PREFIX=""
 
-export AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+export AUTHORIZED_KEYS=".ssh/authorized_keys"
 export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export ENVIRONMENT_KEYS="/etc/environment"
