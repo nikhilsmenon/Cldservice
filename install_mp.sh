@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [[ -n "$CFGSVC_BUILD" ]]; then echo "The cfgsvc build no  is $CFGSVC_BUILD"; else  export  CFGSVC_BUILD="214"; fi
+if [[ -n "$cfgsvc_buildno" ]]; then echo "The cfgsvc build no  is $cfgsvc_buildno"; else  export  cfgsvc_buildno="214"; fi
 login_cmd=` echo aws ecr get-login --registry-ids 252210149234 `
 docker_login=`eval $login_cmd`
 echo $docker_login
 eval $docker_login
-docker pull 252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$CFGSVC_BUILD
+docker pull 252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$cfgsvc_buildno
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
