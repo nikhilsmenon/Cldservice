@@ -15,8 +15,7 @@ datapop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable
 
 docker pull $datapop_cfgsvc
 
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
+
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
 
 source $USER_DATA_ENV
