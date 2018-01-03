@@ -5,7 +5,7 @@ export USER_NAME='nsroot'
 export USER_DATA_ENV="/var/cfgsvc/user_data.env"
 export CLOUD_PREFIX=""
 
-export AUTHORIZED_KEYS=".ssh/authorized_keys"
+export AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
 export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export ENVIRONMENT_KEYS="/etc/environment"
@@ -16,6 +16,20 @@ export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
 
 #export CLOUD_USER_DATA_FILE='/var/lib/cloud/instance/user-data.txt' 
 export CLOUD_USER_DATA_FILE='/var/userdata.env'
+if [[ "$1" == "azure" ]]; then 
+ CLOUD_PLATFORM="azure"
+ CLOUD_PREFIX="az"
+ cat /var/lib/cloud/instance/user-data.txt > $CLOUD_USER_DATA_FILE
+fi
+if [[ "$1" == "aws" ]]; then
+  CLOUD_PREFIX="aws"
+  USER_NAME="ubuntu"
+  CLOUD_PLATFORM="aws"
+  AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+  CLOUD_USER_DATA_FILE='/var/userdata.env'
+  
+fi
+
 export bootstrap_status=0
 export environment=`grep ENVIRNOMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export deployment_name=`grep DEPLOYMENT_NAME  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
@@ -24,7 +38,7 @@ export stylebook_buildno=`grep STYLEBOOK_BUILDNO $CLOUD_USER_DATA_FILE  | cut -d
 export pop_type=`grep POP_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export service_type=`grep SERVICE_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2  | tr -d '"' | tr -d ' '`
 export zone=`grep AWS_DEFAULT_REGION  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
-export CLOUD_PLATFORM=`grep CLOUD_PLATFORM $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
+#export CLOUD_PLATFORM=`grep CLOUD_PLATFORM $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 echo "--------------------Fetching the required variable from userdata-----"
 echo "environment is : $environment"
 echo "deployment_name is : $deployment_name"
@@ -36,14 +50,7 @@ echo "zone is:  $zone"
 echo "CLOUD_PLATFORM is : $CLOUD_PLATFORM"
 echo "----------------------Cloud platform $CLOUD_PLATFORM-----------------------------------"
 
-if [[ "$CLOUD_PLATFORM" == "azure"  ]]; then
- CLOUD_PREFIX="az"
-else
-  CLOUD_PREFIX="aws"
-  USER_NAME="ubuntu"
-  AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
 
-fi
 echo "setting the hostname" 
 host_ip=`hostname -I | cut -d' ' -f1`
 LABEL="-cfgsvc-"
