@@ -16,7 +16,7 @@ docker pull $stylebook_image
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
-source $USER_DATA_ENV
+source $SECRETS_KEYS
 
 CURR_HOST=`hostname -I | cut -d' ' -f1`
 SB_SERVER=$CURR_HOST
