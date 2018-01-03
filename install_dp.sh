@@ -17,8 +17,7 @@ docker pull $datapop_cfgsvc
 
 
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
-
-source $USER_DATA_ENV
+source $SECRETS_KEYS
 export SOURCE_TYPE=""
 export SOURCE=""
 export SPLUNK_TOKEN=""
