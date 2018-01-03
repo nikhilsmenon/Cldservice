@@ -12,10 +12,9 @@ echo $docker_login
 eval $docker_login
 
 datapop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable:$cfgsvc_buildno"
-stylebook_image="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable:$stylebook_buildno"
 
 docker pull $datapop_cfgsvc
-docker pull $stylebook_image
+
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
@@ -54,7 +53,7 @@ container_name="dp_cfgsvc"
 
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
-docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SB_SERVER=$SB_SERVER -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER -e TF_LOG=$TF_LOG -e TF_LOG_PATH=$TF_LOG_PATH -e TF_SKIP_PROVIDER_VERIFY=$TF_SKIP_PROVIDER_VERIFY -e PYTHONPATH=$PYTHONPATH --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
+docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SB_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER -e TF_LOG=$TF_LOG -e TF_LOG_PATH=$TF_LOG_PATH -e TF_SKIP_PROVIDER_VERIFY=$TF_SKIP_PROVIDER_VERIFY -e PYTHONPATH=$PYTHONPATH --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
 
 
 
