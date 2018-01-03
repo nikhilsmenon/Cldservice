@@ -17,6 +17,7 @@ docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
 source $SECRETS_KEYS
+source $USER_DATA_ENV
 
 CURR_HOST=`hostname -I | cut -d' ' -f1`
 SB_SERVER=$CURR_HOST
