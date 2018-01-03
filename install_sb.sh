@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /etc/environment
-if [[ -n "$stylebook_buildno" ]]; then echo "The cfgsvc build no  is $stylebook_buildno"; else  export  stylebook_buildno="stylebook"; fi
+if [[ -n "$stylebook_buildno" ]]; then echo "The stylebook build no  is $stylebook_buildno"; else  export  stylebook_buildno="stylebook"; fi
 aws configure set aws_access_key_id $access_key
 aws configure set aws_secret_access_key $secret_key
 aws configure set default.region us-east-2
