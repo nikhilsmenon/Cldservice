@@ -31,7 +31,7 @@ if [[ "$1" == "aws" ]]; then
 fi
 
 export bootstrap_status=0
-export environment=`grep ENVIRNOMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
+export environment=`grep ENVIRONMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export deployment_name=`grep DEPLOYMENT_NAME  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export cfgsvc_buildno=`grep CFGSVC_BULDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2  | tr -d '"' | tr -d ' '`
 export stylebook_buildno=`grep STYLEBOOK_BUILDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
