@@ -1,5 +1,4 @@
 #!/bin/bash
-
 source /etc/environment
 if [[ -n "$stylebook_buildno" ]]; then echo "The stylebook build no  is $stylebook_buildno"; else  export  stylebook_buildno="stylebook"; fi
 aws configure set aws_access_key_id $access_key
