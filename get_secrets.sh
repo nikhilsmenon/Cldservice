@@ -31,9 +31,18 @@ docker rm $(docker ps -aq)
 docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pguser -e POSTGRES_DB=mpsdb -e  POSTGRES_USER=mpsroot --name localdb postgres 
 docker run -d -it --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -e TRUST_SVC_AUTH="CWSAuth"   -e MESSAGING_SERVER_URL="djehdje" --env-file /var/ecr.env -e DB_USER=mpsroot  -e DB_PORT=5432 -e DB_HOST=$CURR_HOST -e DB_PASS=pguser -e DB_NAME=mpsdb  -p 5000:5000 -p 5002:5002 --name cwcget $cwc_image
 docker wait cwcget
-sleep 10
+sleep 3
 docker wait cwcget
+#sleep 10
+#docker wait cwcget
+CID=$(docker ps -q -f status=running -f name=^/cwcget)
+if [ ! "${CID}" ]; then
+  echo "Container doesn't exist"
+fi
+unset CID
+
 docker cp $BOOTSTRAP_DIR/cwcget.py cwcget:/app/cfgsvc
+echo "file copied to container"
 fi
 if [ ! -d "$SECRET_DIR"  ]; then
   mkdir $SECRET_DIR
