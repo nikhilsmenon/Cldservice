@@ -148,8 +148,9 @@ echo ""  #    rm -rf /var/cfgsvc_config
 fi
 
 echo "-------------------------------sourcing the the env files---------------------------"
-cat $ECR_KEYS
+cat $ECR_KEYS 
 source /etc/environment
+cp /etc/environment $ECR_KEYS
 echo "the userdata are  are copied to /etc/env"
 
 echo "-------------------------pulling the script---------------------------------------------"
