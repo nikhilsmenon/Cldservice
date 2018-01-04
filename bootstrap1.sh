@@ -37,7 +37,7 @@ export cfgsvc_buildno=`grep CFGSVC_BULDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2
 export stylebook_buildno=`grep STYLEBOOK_BUILDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export pop_type=`grep POP_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export service_type=`grep SERVICE_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2  | tr -d '"' | tr -d ' '`
-export zone=`grep AWS_DEFAULT_REGION  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
+export zone=`grep -e AWS_DEFAULT_REGION -e zone $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 #export CLOUD_PLATFORM=`grep CLOUD_PLATFORM $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 echo "--------------------Fetching the required variable from userdata-----"
 echo "environment is : $environment"
