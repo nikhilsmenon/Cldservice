@@ -30,7 +30,7 @@ TF_LOG_PATH=/var/log/terraform.log
 TF_SKIP_PROVIDER_VERIFY=1
 PYTHONPATH="/app/cfgsvc"
 
-
+typeset -l service_type
 if [[ "$service_type" == "ngs" ]]; then
      echo " service is ngs , setting the requied details  "
       SPLUNK_TOKEN=$NGS_DP_SPLUNK_TOKEN
