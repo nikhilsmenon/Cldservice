@@ -1,5 +1,4 @@
 #!/bin/bash
-
 source /etc/environment
 if [[ -n "$cfgsvc_buildno" ]]; then echo "The cfgsvc build no  is $cfgsvc_buildno"; else  export  cfgsvc_buildno="216"; fi
 aws configure set aws_access_key_id $access_key
