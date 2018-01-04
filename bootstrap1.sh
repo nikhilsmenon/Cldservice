@@ -89,7 +89,7 @@ case "$environment" in
              if [ ! -f "$BOOTSTRAP_DIR/get_secrets.sh"  ]; then 
                 echo "Get_secret not exist , hence pulling"
                 curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/get_secrets.sh  -o $BOOTSTRAP_DIR/get_secrets.sh
-                sleep3
+                sleep 3
              fi
              chmod 777 $BOOTSTRAP_DIR/get_secrets.sh
              echo "executing get_secrets ......"
