@@ -16,17 +16,19 @@ export SOURCE_TYPE=""
 export SOURCE=""
 export SPLUNK_TOKEN=""
 echo "$NGS_MP_SPLUNK_TOKEN"
-
+typeset -l service_type
 if [[ "$service_type" == "ngs" ]]; then
      echo " service is ngs , setting the requied details  "
       SPLUNK_TOKEN=$NGS_MP_SPLUNK_TOKEN
       SOURCE_TYPE="mp_cfgsvc"
       SOURCE="cfgsvc_ngs"
+      SERVICE_TYPE="NGS"
 else
   echo "service type is waf , setting the required details "
   SPLUNK_TOKEN=$WAF_MP_SPLUNK_TOKEN
   SOURCE_TYPE="mp_cfgsvc"
   SOURCE="cfgsvc_waf"
+  SERVICE_TYPE="WAF"
 fi
 
 echo "pop id : $POP_ID"
@@ -39,4 +41,4 @@ sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
 sleep 10
 
-docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV  --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5001:5001  --name $container_name $mgmtpop_cfgsvc
+docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV  -e SERVICE_TYPE=$SERVICE_TYPE --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5001:5001  --name $container_name $mgmtpop_cfgsvc
