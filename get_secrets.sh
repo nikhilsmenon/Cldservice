@@ -4,8 +4,7 @@ export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export SECRET_DIR="/var/cfgsvc"
 export BOOTSTRAP_DIR="/var/cfgsvc"
-source /var/ecr.env
-
+source /etc/environment
 aws configure set aws_access_key_id $access_key
 aws configure set aws_secret_access_key $secret_key
 aws configure set default.region us-east-2
