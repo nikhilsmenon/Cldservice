@@ -35,12 +35,13 @@ if [[ "$service_type" == "ngs" ]]; then
      echo " service is ngs , setting the requied details  "
       SPLUNK_TOKEN=$NGS_DP_SPLUNK_TOKEN
       SOURCE_TYPE="dp_cfgsvc"
-	 
+      SERVICE_TYPE="NGS"
       SOURCE="cfgsvc_ngs"
 else
   echo "service type is waf , setting the required details "
   SPLUNK_TOKEN=$WAF_DP_SPLUNK_TOKEN
   SOURCE_TYPE="dp_cfgsvc"
+  SERVICE_TYPE="WAF"
   SOURCE="cfgsvc_waf"
 fi
 
@@ -50,7 +51,7 @@ container_name="dp_cfgsvc"
 
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
-docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SB_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER -e TF_LOG=$TF_LOG -e TF_LOG_PATH=$TF_LOG_PATH -e TF_SKIP_PROVIDER_VERIFY=$TF_SKIP_PROVIDER_VERIFY -e PYTHONPATH=$PYTHONPATH --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
+docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SERVICE_TYPE=$SERVICE_TYPE -e SB_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER -e TF_LOG=$TF_LOG -e TF_LOG_PATH=$TF_LOG_PATH -e TF_SKIP_PROVIDER_VERIFY=$TF_SKIP_PROVIDER_VERIFY -e PYTHONPATH=$PYTHONPATH --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
 
 
 
