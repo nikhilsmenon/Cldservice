@@ -1,6 +1,6 @@
 #!/bin/bash
 source /etc/environment
-if [[ -n "$cfgsvc_buildno" ]]; then echo "The cfgsvc build no  is $cfgsvc_buildno"; else  export  cfgsvc_buildno="214"; fi
+if [[ -n "$cfgsvc_buildno" ]]; then echo "The cfgsvc build no  is $cfgsvc_buildno"; else  export  cfgsvc_buildno="216"; fi
 login_cmd=` echo aws ecr get-login --registry-ids 252210149234 `
 docker_login=`eval $login_cmd`
 echo $docker_login
