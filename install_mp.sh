@@ -35,7 +35,7 @@ echo "pop id : $POP_ID"
 
 container_name="mp_cfgsvc"
 
-mgmtpop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$CFGSVC_BUILD"
+mgmtpop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$cfgsvc_buildno"
 sleep 10
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
