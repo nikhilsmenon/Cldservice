@@ -5,7 +5,9 @@ login_cmd=` echo aws ecr get-login --registry-ids 252210149234 `
 docker_login=`eval $login_cmd`
 echo $docker_login
 eval $docker_login
-docker pull 252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$cfgsvc_buildno
+mgmtpop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$cfgsvc_buildno"
+
+docker pull $mgmtpop_cfgsvc
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
