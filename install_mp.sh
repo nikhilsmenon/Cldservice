@@ -42,5 +42,5 @@ sleep 10
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
 sleep 10
-
-docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV  -e SERVICE_TYPE=$SERVICE_TYPE --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5001:5001  --name $container_name $mgmtpop_cfgsvc
+MSG_CA_CERTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt
+docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e MSG_CA_CERTS_FILE_PATH=$MSG_CA_CERTS_FILE_PATH    -e SERVICE_TYPE=$SERVICE_TYPE --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5001:5001  --name $container_name $mgmtpop_cfgsvc
