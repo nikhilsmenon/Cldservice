@@ -29,6 +29,15 @@ if [[ "$1" == "aws" ]]; then
   CLOUD_USER_DATA_FILE='/var/userdata.env'
   
 fi
+if [[ -n "$1" ]]; then 
+   echo ""
+else 
+CLOUD_PREFIX="aws"
+USER_NAME="ubuntu"
+CLOUD_PLATFORM="aws"
+AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+CLOUD_USER_DATA_FILE='/var/userdata.env'
+fi
 
 export bootstrap_status=0
 export environment=`grep ENVIRONMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
