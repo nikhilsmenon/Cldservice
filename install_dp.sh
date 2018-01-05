@@ -20,7 +20,7 @@ source $SECRETS_KEYS
 export SOURCE_TYPE=""
 export SOURCE=""
 export SPLUNK_TOKEN=""
-
+export  SERVICE_TYPE=""
 CURR_HOST=`hostname -I | cut -d' ' -f1`
 SB_SERVER=$CURR_HOST
 DP_INV_PORT=5002
