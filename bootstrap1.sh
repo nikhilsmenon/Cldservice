@@ -119,7 +119,7 @@ case "$environment" in
             bash $BOOTSTRAP_DIR/get_secrets.sh "STG"
             sleep 2
 
-            echo "MSG_CA_CERTS_FILE_PATH='/etc/ssl/certs/ca-certificates.crt'">> $USER_DATA_ENV
+            echo "MSG_CA_CERTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt">> $USER_DATA_ENV
 	    shift # past argument
 	    ;;
 	    "production")
@@ -131,7 +131,7 @@ case "$environment" in
               chmod 777 $BOOTSTRAP_DIR/get_secrets.sh
               echo "executing get_secrets ......"
                bash $BOOTSTRAP_DIR/get_secrets.sh "PRD"
-            echo "MSG_CA_CERTS_FILE_PATH='/etc/ssl/certs/ca-certificates.crt'">> $USER_DATA_ENV
+            echo "MSG_CA_CERTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt">> $USER_DATA_ENV
 	    shift
 	    ;;
 esac
