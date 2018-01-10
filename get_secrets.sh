@@ -29,10 +29,10 @@ if [ ! -f "$BOOTSTRAP_DIR/cwckeys.env"  ]; then
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pguser -e POSTGRES_DB=mpsdb -e  POSTGRES_USER=mpsroot --name localdb postgres 
-docker run -d -it --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -e TRUST_SVC_AUTH="CWSAuth"   -e MESSAGING_SERVER_URL="djehdje" --env-file /var/ecr.env -e DB_USER=mpsroot  -e DB_PORT=5432 -e DB_HOST=$CURR_HOST -e DB_PASS=pguser -e DB_NAME=mpsdb  -p 5000:5000 -p 5002:5002 --name cwcget $cwc_image
-
+#docker run -d -it --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -e TRUST_SVC_AUTH="CWSAuth"   -e MESSAGING_SERVER_URL="djehdje" --env-file /var/ecr.env -e DB_USER=mpsroot  -e DB_PORT=5432 -e DB_HOST=$CURR_HOST -e DB_PASS=pguser -e DB_NAME=mpsdb  -p 5000:5000 -p 5002:5002 --name cwcget $cwc_image
+docker run -d -it --restart=always  --env-file /var/ecr.env  -p 5000:5000  --name cwcget $cwc_image
+#docker wait cwcget
 sleep 5
-docker wait cwcget
 docker ps
 #docker wait cwcget
 #sleep 10
@@ -70,7 +70,7 @@ else
 fi
 if [[ $docker_exec == *"pass"* ]]; then
   echo "Downloading from CWC is completed"
-  is_cwcdone="1"
+  touch /var/cwcdone.txt
   docker cp cwcget:/app/cfgsvc/cwckeys.env $BOOTSTRAP_DIR
   grep '^TST_' $BOOTSTRAP_DIR/cwckeys.env > $BOOTSTRAP_DIR/tmp.env
   sed 's/^.\{,4\}//' $BOOTSTRAP_DIR/cwckeys.env > $SECRETS_KEYS
