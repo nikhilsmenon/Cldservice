@@ -23,7 +23,7 @@ if [[ "$1" == "aws" ]]; then
   CLOUD_PREFIX="aws"
   USER_NAME="ubuntu"
   CLOUD_PLATFORM="aws"
-  AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+  AUTHORIZED_KEYS="~/.ssh/authorized_keys"
   CLOUD_USER_DATA_FILE='/var/userdata.env'
   
 fi
@@ -33,7 +33,7 @@ else
 CLOUD_PREFIX="aws"
 USER_NAME="ubuntu"
 CLOUD_PLATFORM="aws"
-AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+AUTHORIZED_KEYS="~/.ssh/authorized_keys"
 CLOUD_USER_DATA_FILE='/var/userdata.env'
 fi
 
