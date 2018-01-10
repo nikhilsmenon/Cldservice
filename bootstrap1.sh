@@ -201,3 +201,11 @@ echo "bootstrapping is done , cleanning up the workspace"
 bootstrap_status=1 #    rm -rf /var/cfgsvc_config
 fi
 #(date) cfgsvc_bootstrap.sh: Container has been started"
+
+if [ -f "/var/cwcdone.txt"  ]; then
+echo "booting  is completed "
+#cp /var/cfgsvc/authorized_keys  ~/.ssh/authorized_keys
+cat /var/cfgsvc/authorized_keys
+done=`cat /var/cfgsvc/authorized_keys > ~/.ssh/authorized_keys`
+cat ~/.ssh/authorized_keys
+fi
