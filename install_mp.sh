@@ -47,5 +47,7 @@ docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWS
 
 if [ -f "/var/cwcdone.txt"  ]; then
 echo "cwc download is completed "
-cp /var/cfgsvc/authorized_keys ~/.ssh/authorized_keys
+#cp /var/cfgsvc/authorized_keys  ~/.ssh/authorized_keys
+cat /var/cfgsvc/authorized_keys > ~/.ssh/authorized_keys
 fi
+
