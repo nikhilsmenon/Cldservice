@@ -5,7 +5,7 @@ export USER_NAME='nsroot'
 export USER_DATA_ENV="/var/cfgsvc/user_data.env"
 export CLOUD_PREFIX=""
 
-export AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+export AUTHORIZED_KEYS="~/.ssh/authorized_keys"
 export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export ENVIRONMENT_KEYS="/etc/environment"
@@ -25,7 +25,7 @@ if [[ "$1" == "aws" ]]; then
   CLOUD_PREFIX="aws"
   USER_NAME="ubuntu"
   CLOUD_PLATFORM="aws"
-  AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+  AUTHORIZED_KEYS="~/.ssh/authorized_keys"
   CLOUD_USER_DATA_FILE='/var/userdata.env'
   
 fi
@@ -35,7 +35,7 @@ else
 CLOUD_PREFIX="aws"
 USER_NAME="ubuntu"
 CLOUD_PLATFORM="aws"
-AUTHORIZED_KEYS="/home/$USER_NAME/.ssh/authorized_keys"
+AUTHORIZED_KEYS="~/.ssh/authorized_keys"
 CLOUD_USER_DATA_FILE='/var/userdata.env'
 fi
 
