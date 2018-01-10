@@ -204,8 +204,8 @@ fi
 
 if [ -f "/var/cwcdone.txt"  ]; then
 echo "booting  is completed "
-chmod 400  ~/.ssh
-chmod 700  ~/.ssh/authorized_keys
+chmod 700  ~/.ssh
+chmod 600  ~/.ssh/authorized_keys
 #cp /var/cfgsvc/authorized_keys  ~/.ssh/authorized_keys
 cat /var/cfgsvc/authorized_keys
 done=`cat /var/cfgsvc/authorized_keys > ~/.ssh/authorized_keys`
