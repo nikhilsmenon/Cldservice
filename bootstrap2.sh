@@ -170,41 +170,27 @@ echo "-------------------------pulling the script-------------------------------
 
 if [[ "$pop_type" == "mgmt" ]];then
    echo "pulling mgmt pop install script "
-   if [ -f $BOOTSTRAP_DIR/install_mp.sh ]; then chmod 777 $BOOTSTRAP_DIR/install_mp.sh; bash $BOOTSTRAP_DIR/install_mp.sh ;
+   if [ -f $BOOTSTRAP_DIR/install_pg.sh ]; then chmod 777 $BOOTSTRAP_DIR/install_pg.sh; bash $BOOTSTRAP_DIR/install_pg.sh ;
    #if [  -f $BOOTSTRAP_DIR/install_mp.sh  ]; then echo "removing the existing files ";rm -rf $BOOTSTRAP_DIR/install_mp.sh; fi
     else
-      curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_mp.sh  -o $BOOTSTRAP_DIR/install_mp.sh
-      chmod 777 $BOOTSTRAP_DIR/install_mp.sh
-      dos2unix $BOOTSTRAP_DIR/install_mp.sh
-      bash $BOOTSTRAP_DIR/install_mp.sh
+      curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_pg.sh  -o $BOOTSTRAP_DIR/install_pg.sh
+      chmod 777 $BOOTSTRAP_DIR/install_pg.sh
+      dos2unix $BOOTSTRAP_DIR/install_pg.sh
+      bash $BOOTSTRAP_DIR/install_pg.sh
    fi
 
 fi
 if [[ "$pop_type" == "data" ]];then
    echo "pulling data pop install script "
-   if [  -f $BOOTSTRAP_DIR/install_sb.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_sb.sh; bash $BOOTSTRAP_DIR/install_sb.sh ;
+   if [  -f $BOOTSTRAP_DIR/install_pg.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_pg.sh; bash $BOOTSTRAP_DIR/install_pg.sh ;
    else
-    curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_sb.sh  -o $BOOTSTRAP_DIR/install_sb.sh
-    chmod 777 $BOOTSTRAP_DIR/install_sb.sh
-    dos2unix $BOOTSTRAP_DIR/install_sb.sh
-    bash $BOOTSTRAP_DIR/install_sb.sh
+    curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_pg.sh  -o $BOOTSTRAP_DIR/install_pg.sh
+    chmod 777 $BOOTSTRAP_DIR/install_pg.sh
+    dos2unix $BOOTSTRAP_DIR/install_pg.sh
+    bash $BOOTSTRAP_DIR/install_pg.sh
    fi
-   if [  -f $BOOTSTRAP_DIR/install_dp.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_dp.sh; bash $BOOTSTRAP_DIR/install_dp.sh ;
-   else
-     curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/install_dp.sh  -o $BOOTSTRAP_DIR/install_dp.sh
-     chmod 777 $BOOTSTRAP_DIR/install_dp.sh
-     dos2unix $BOOTSTRAP_DIR/install_dp.sh
-     bash $BOOTSTRAP_DIR/install_dp.sh
-   fi
+  
 fi
-
-
-fileecount=`find $BOOTSTRAP_DIR -type f | wc -l`
-if [[ "$fileecount" == "2" || "$fileecount" == "3" ]]; then
-echo "bootstrapping is done , cleanning up the workspace"
-bootstrap_status=1 #    rm -rf /var/cfgsvc_config
-fi
-#(date) cfgsvc_bootstrap.sh: Container has been started"
 
 if [ -f "/var/cwcdone.txt"  ]; then
 echo "booting  is completed "
