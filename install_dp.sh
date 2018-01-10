@@ -53,7 +53,10 @@ sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
 docker run -d  --restart=always  -v "/var/log":"/var/log" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SERVICE_TYPE=$SERVICE_TYPE -e  STYLEBOOK_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER -e TF_LOG=$TF_LOG -e TF_LOG_PATH=$TF_LOG_PATH -e TF_SKIP_PROVIDER_VERIFY=$TF_SKIP_PROVIDER_VERIFY -e PYTHONPATH=$PYTHONPATH --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
 
-if [[ "$is_cwcdone" == "1" ]]; then 
+if [ -f "/var/cwcdone.txt"  ]; then
+echo "cwc download is completed "
 cp /var/cfgsvc/authorized_keys ~/.ssh/authorized_keys
 fi
+
+
 
