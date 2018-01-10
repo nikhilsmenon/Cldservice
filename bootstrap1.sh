@@ -14,9 +14,7 @@ export ECR_KEYS="/var/ecr.env"
 export BUILD_FILE="/var/cfgsvc/build"
 export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
 
-echo "" > ~/.ssh/authorized_keys
-echo "" > /home/nsroot/.ssh/authorized_keys
-echo "" > /home/ubuntu/.ssh/authorized_keys
+
 
 #export CLOUD_USER_DATA_FILE='/var/lib/cloud/instance/user-data.txt' 
 export CLOUD_USER_DATA_FILE='/var/userdata.env'
