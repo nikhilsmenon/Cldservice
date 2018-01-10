@@ -21,6 +21,8 @@ sed "s/PermitRootLogin */PermitRootLogin yes/g" /etc/ssh/sshd_config > /etc/ssh/
 usermod -aG sudo cfgsvcdp
 service ssh restart
 
+awk -F':' '{ print $1}' /etc/passwd
+
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
 source $SECRETS_KEYS
 export SOURCE_TYPE=""
