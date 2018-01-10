@@ -5,14 +5,11 @@ export USER_NAME='nsroot'
 export USER_DATA_ENV="/var/cfgsvc/user_data.env"
 export CLOUD_PREFIX=""
 
-export AUTHORIZED_KEYS="~/.ssh/authorized_keys"
+export AUTHORIZED_KEYS="/home/nsroot/.ssh/authorized_keys"
 export SSH_KEYS="/var/cfgsvc/authorized_keys"
 export SECRETS_KEYS="/var/cfgsvc/secret.env"
 export ENVIRONMENT_KEYS="/etc/environment"
 export BOOTSTRAP_DIR="/var/cfgsvc"
-export ECR_KEYS="/var/ecr.env"
-export BUILD_FILE="/var/cfgsvc/build"
-export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
 
 echo "" > ~/.ssh/authorized_keys
 echo "" > /home/nsroot/.ssh/authorized_keys
@@ -29,7 +26,7 @@ if [[ "$1" == "aws" ]]; then
   CLOUD_PREFIX="aws"
   USER_NAME="ubuntu"
   CLOUD_PLATFORM="aws"
-  AUTHORIZED_KEYS="~/.ssh/authorized_keys"
+  AUTHORIZED_KEYS="/home/nsroot/.ssh/authorized_keys"
   CLOUD_USER_DATA_FILE='/var/userdata.env'
   
 fi
@@ -39,28 +36,18 @@ else
 CLOUD_PREFIX="aws"
 USER_NAME="ubuntu"
 CLOUD_PLATFORM="aws"
-AUTHORIZED_KEYS="~/.ssh/authorized_keys"
+AUTHORIZED_KEYS="/home/ubuntu/.ssh/authorized_keys"
 CLOUD_USER_DATA_FILE='/var/userdata.env'
 fi
 
 export bootstrap_status=0
 export environment=`grep ENVIRONMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export deployment_name=`grep DEPLOYMENT_NAME  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
-export cfgsvc_buildno=`grep -e CFGSVC_BULDNO -e CFGSVC_BUILDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2  | tr -d '"' | tr -d ' '`
-export stylebook_buildno=`grep STYLEBOOK_BUILDNO $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
-export pop_type=`grep POP_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
-export service_type=`grep SERVICE_TYPE $CLOUD_USER_DATA_FILE  | cut -d'=' -f2  | tr -d '"' | tr -d ' '`
 export zone=`grep -e AWS_DEFAULT_REGION -e zone $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
-#export CLOUD_PLATFORM=`grep CLOUD_PLATFORM $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 echo "--------------------Fetching the required variable from userdata-----"
 echo "environment is : $environment"
 echo "deployment_name is : $deployment_name"
-echo "cfgsvc_buildno is : $cfgsvc_buildno"
-echo "stylebook_buildno is : $stylebook_buildno"
-echo "pop_type is : $pop_type"
-echo "service_type is : $service_type"
 echo "zone is:  $zone"
-echo "CLOUD_PLATFORM is : $CLOUD_PLATFORM"
 echo "----------------------Cloud platform $CLOUD_PLATFORM-----------------------------------"
 
 
@@ -73,15 +60,6 @@ echo "hostname : $VMNAME"
 hostname $VMNAME
 sudo echo "127.0.0.1 $VMNAME" >> /etc/hosts
 
-#echo "Adding the user"
-#adduser $USER_NAME --disabled-password
-#usermod -aG sudo $USER_NAME
-#sudo su - $USER_NAME
-#echo "creating the ssh directory"
-#mkdir .ssh
-#chmod 700 .ssh
-#touch .ssh/authorized_keys
-#chmod 600 .ssh/authorized_keys
 
 if [ ! -d "$BOOTSTRAP_DIR"  ]; then
   mkdir $BOOTSTRAP_DIR
