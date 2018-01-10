@@ -17,6 +17,7 @@ sed -i "s/PasswordAuthentication*/PasswordAuthentication yes/g" /etc/ssh/sshd_co
 sed "s/PermitRootLogin */PermitRootLogin yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
 usermod -aG sudo cfgsvcmp
 service ssh restart
+awk -F':' '{ print $1}' /etc/passwd
 
 source $SECRETS_KEYS
 echo $SECRETS_KEYS
