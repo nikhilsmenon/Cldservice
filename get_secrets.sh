@@ -9,7 +9,7 @@ aws configure set aws_access_key_id $access_key
 aws configure set aws_secret_access_key $secret_key
 aws configure set default.region us-east-2
 
-cwc_image="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable:ctestcwc"
+cwc_image="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable:testcwc10"
 login_cmd=` echo aws ecr get-login --registry-ids 252210149234 `
 docker_login=`eval $login_cmd`
 echo $docker_login
