@@ -98,6 +98,7 @@ case "$environment" in
              chmod 777 $BOOTSTRAP_DIR/get_secrets.sh
              echo "executing get_secrets ......"
              bash $BOOTSTRAP_DIR/get_secrets.sh "TST"
+             bash $BOOTSTRAP_DIR/get_secrets.sh "TST"
              sleep 2
             shift # past argument
             ;;
@@ -111,6 +112,7 @@ case "$environment" in
             chmod 777 $BOOTSTRAP_DIR/get_secrets.sh
             echo "executing get_secrets ......"
             sleep 3
+            bash $BOOTSTRAP_DIR/get_secrets.sh "STG"
             bash $BOOTSTRAP_DIR/get_secrets.sh "STG"
             sleep 2
 
