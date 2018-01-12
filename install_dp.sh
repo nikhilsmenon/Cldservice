@@ -59,7 +59,7 @@ container_name="dp_cfgsvc"
 
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
-docker run -d  --restart=always  -v "/var/log":"/var/log"  -e TF_LOG=TRACE -e TF_LOG_PATH=/var/log/terraform.log -e TF_SKIP_PROVIDER_VERIFY=1 -e  PYTHONPATH="/app/cfgsvc" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SERVICE_TYPE=$SERVICE_TYPE -e  STYLEBOOK_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
+docker run -d  --restart=always  -v "/var/log":"/var/log" -e AWS_DEFAULT_REGION=$zone -e TF_LOG=TRACE -e TF_LOG_PATH=/var/log/terraform.log -e TF_SKIP_PROVIDER_VERIFY=1 -e  PYTHONPATH="/app/cfgsvc" -e TRUST_SVC_AUTH="CWSAuth" --env-file $SECRETS_KEYS --env-file  $USER_DATA_ENV -e SERVICE_TYPE=$SERVICE_TYPE -e  STYLEBOOK_SERVER=$SB_SERVER:5800 -e DP_INV_PORT=$DP_INV_PORT -e DP_INV_SERVER=$DP_INV_SERVER --log-driver=splunk --log-opt splunk-token=$SPLUNK_TOKEN --log-opt splunk-url="https://http-inputs-citrixsys.splunkcloud.com" --log-opt splunk-sourcetype=container:$SOURCE_TYPE --log-opt splunk-format=json   --log-opt splunk-source=container:$SOURCE --log-opt tag="{{.Name}}_{{.ID}}"  -p 5000:5000 -p 5002:5002 --name $container_name $datapop_cfgsvc
 
 if [ -f "/var/cwcdone.txt"  ]; then
 echo "cwc download is completed "
