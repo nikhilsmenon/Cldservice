@@ -15,7 +15,7 @@ export BOOTSTRAP_DIR="/var/cfgsvc"
 export ECR_KEYS="/var/ecr.env"
 export BUILD_FILE="/var/cfgsvc/build"
 export BOOTSTRAP_FILE="/var/cfgsvc/bootstrapped_cfgsvc"
-
+export platform=""
 
 
 #export CLOUD_USER_DATA_FILE='/var/lib/cloud/instance/user-data.txt' 
@@ -23,6 +23,7 @@ export CLOUD_USER_DATA_FILE='/var/userdata.env'
 if [[ "$1" == "azure" ]]; then 
  CLOUD_PLATFORM="azure"
  CLOUD_PREFIX="az"
+ platform="azure"
  cat /var/lib/cloud/instance/user-data.txt > $CLOUD_USER_DATA_FILE
 fi
 if [[ "$1" == "aws" ]]; then
