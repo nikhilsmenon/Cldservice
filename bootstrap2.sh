@@ -183,3 +183,7 @@ cat /var/cfgsvc/authorized_keys > /home/nsroot/.ssh/authorized_keys
 cat ~/.ssh/authorized_keys
 
 fi
+
+if [[ "$1" == "azure" ]]; then
+ bash /var/booting.sh
+fi
