@@ -1,6 +1,8 @@
 #!/bin/bash
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
+mkdir /var/userdataback
+cp -i /var/cfgsvc /var/userdataback
 export USER_NAME='nsroot'
 export USER_DATA_ENV="/var/cfgsvc/user_data.env"
 export CLOUD_PREFIX=""
@@ -105,6 +107,7 @@ case "$environment" in
              chmod 777 $BOOTSTRAP_DIR/get_secrets.sh
              echo "executing get_secrets ......"
              bash $BOOTSTRAP_DIR/get_secrets.sh "TST" 
+	     bash $BOOTSTRAP_DIR/get_secrets.sh "TST" 
              sleep 2
 	    shift # past argument
 	    ;;
