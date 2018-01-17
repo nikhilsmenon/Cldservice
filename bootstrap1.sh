@@ -206,6 +206,20 @@ if [[ "$pop_type" == "data" ]];then
      dos2unix $BOOTSTRAP_DIR/install_dp.sh
      bash $BOOTSTRAP_DIR/install_dp.sh
    fi
+   sleep 8
+   typeset -l service_type
+   if [[ "$service_type" == "ngs" ]]; then
+      if [  -f $BOOTSTRAP_DIR/putsb.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_dp.sh; cd $BOOTSTRAP_DIR; bash $BOOTSTRAP_DIR/putsb.sh $BOOTSTRAP_DIR/saas_saml.yml ;
+      else
+        curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/putsb.sh  -o $BOOTSTRAP_DIR/putsb.sh
+        curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/getsb.py  -o $BOOTSTRAP_DIR/getsb.py
+        curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/saas_saml.yml -o $BOOTSTRAP_DIR/saas_saml.yml
+        chmod 777 $BOOTSTRAP_DIR/putsb.sh
+        dos2unix $BOOTSTRAP_DIR/putsb.sh
+        cd $BOOTSTRAP_DIR
+        bash $BOOTSTRAP_DIR/putsb.sh $BOOTSTRAP_DIR/saas_saml.yml
+      fi
+    fi   
 fi
 
 
