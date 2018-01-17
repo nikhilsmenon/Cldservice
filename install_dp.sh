@@ -55,7 +55,7 @@ fi
 
 echo "pop id : $POP_ID"
 
-container_name="dp_cfgsvc"
+container_name="dp_cfgsvc_$environment"
 
 sed -i 's/scripts-user$/\[scripts-user, always\]/' /etc/cloud/cloud.cfg
 
