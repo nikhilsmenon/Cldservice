@@ -43,7 +43,7 @@ fi
 
 echo "pop id : $POP_ID"
 
-container_name="mp_cfgsvc_testing"
+container_name="mp_cfgsvc_$environment"
 
 mgmtpop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-mgmt-dev/stable:$cfgsvc_buildno"
 sleep 10
