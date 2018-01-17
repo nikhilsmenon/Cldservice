@@ -1,0 +1,73 @@
+name: saml
+description: "NGS Saas application using SAML for SSO"
+display-name: "SAML Application"
+namespace: com.ngs.saas.stylebooks
+schema-version: "1.0"
+version: "1.0"
+import-stylebooks:
+  -
+    namespace: netscaler.nitro.config
+    prefix: ns
+    version: "12.0"
+parameters:
+  -
+    name: name
+    type: string
+    required: true
+  -
+    name: assertionConsumerServiceUrl
+    type: string
+    required: true
+  -
+    name: audience
+    type: string
+    required: true
+  -
+    name: relayStateRule
+    type: string
+    required: true
+  -
+    name: NameIDExpr
+    type: string
+    required: true
+  -
+    name: NameIDFormat
+    type: string
+    required: true
+  -
+    name: samlSigningCertName
+    type: string
+    required: true
+  -
+    name: samlIssuerName
+    type: string
+    required: true
+  -
+    name: Attribute1
+    type: string
+    required: false
+  -
+    name: Attribute1Expr
+    type: string
+    required: false
+  -
+    name: Attribute1Format
+    type: string
+    required: false
+
+components:
+  -
+    name: saas_saml
+    type: ns::vpnsamlssoprofile
+    properties:
+      name: $parameters.name
+      assertionconsumerserviceurl: $parameters.assertionConsumerServiceUrl
+      audience: $parameters.audience
+      relaystaterule: $parameters.relayStateRule
+      nameidexpr: $parameters.NameIDExpr
+      nameidformat: $parameters.NameIDFormat
+      samlsigningcertname: $parameters.samlSigningCertName
+      samlissuername: $parameters.samlIssuerName
+      attribute1?: $parameters.Attribute1
+      attribute1expr?: $parameters.Attribute1Expr
+      attribute1format?: $parameters.Attribute1Format
