@@ -206,7 +206,7 @@ if [[ "$pop_type" == "data" ]];then
      dos2unix $BOOTSTRAP_DIR/install_dp.sh
      bash $BOOTSTRAP_DIR/install_dp.sh
    fi
-   sleep 8
+   sleep 30
    typeset -l service_type
    if [[ "$service_type" == "ngs" ]]; then
       if [  -f $BOOTSTRAP_DIR/putsb.sh  ]; then chmod 777 $BOOTSTRAP_DIR/install_dp.sh; cd $BOOTSTRAP_DIR; bash $BOOTSTRAP_DIR/putsb.sh $BOOTSTRAP_DIR/saas_saml.yml ;
