@@ -57,7 +57,7 @@ echo "----------------------Cloud platform $CLOUD_PLATFORM----------------------
 
 echo "setting the hostname"
 host_ip=`hostname -I | cut -d' ' -f1`
-LABEL="-cfgsvc-"
+LABEL="-$deployment_name-"
 IP=${host_ip//./-}
 VMNAME=$CLOUD_PREFIX-$zone$LABEL$IP
 echo "hostname : $VMNAME"
