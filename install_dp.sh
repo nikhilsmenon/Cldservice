@@ -14,12 +14,7 @@ datapop_cfgsvc="252210149234.dkr.ecr.us-east-2.amazonaws.com/cfg-data-dev/stable
 
 docker pull $datapop_cfgsvc
 
-echo -e "cfgsvc\ncfgsvc" | (adduser cfgsvcdp)
-echo -e "cfgsvc321\ncfgsvc321" | (passwd cfgsvcdp)
-sed -i "s/PasswordAuthentication*/PasswordAuthentication yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-sed "s/PermitRootLogin */PermitRootLogin yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-usermod -aG sudo cfgsvcdp
-service ssh restart
+
 
 awk -F':' '{ print $1}' /etc/passwd
 
