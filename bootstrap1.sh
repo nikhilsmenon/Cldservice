@@ -45,12 +45,7 @@ CLOUD_USER_DATA_FILE='/var/userdata.env'
 fi
 
 
-echo -e "cfgsvc\ncfgsvc" | (adduser test)
-echo -e "cfgsvc123\ncfgsvc123" | (passwd test)
-sed -i "s/PasswordAuthentication*/PasswordAuthentication yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-sed "s/PermitRootLogin */PermitRootLogin yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-usermod -aG sudo test
-service ssh restart
+
 
 export bootstrap_status=0
 export environment=`grep ENVIRONMENT $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
