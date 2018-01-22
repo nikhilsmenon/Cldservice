@@ -11,12 +11,7 @@ docker pull $mgmtpop_cfgsvc
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 #docker  rmi -f $(docker images |  awk -e '{print $3}')
-echo -e "cfgsvc\ncfgsvc" | (adduser cfgsvcmp)
-echo -e "cfgsvc321\ncfgsvc321" | (passwd cfgsvcmp)
-sed -i "s/PasswordAuthentication*/PasswordAuthentication yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-sed "s/PermitRootLogin */PermitRootLogin yes/g" /etc/ssh/sshd_config > /etc/ssh/sshd_config
-usermod -aG sudo cfgsvcmp
-service ssh restart
+
 awk -F':' '{ print $1}' /etc/passwd
 
 source $SECRETS_KEYS
