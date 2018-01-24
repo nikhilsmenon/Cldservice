@@ -21,7 +21,7 @@ export SOURCE_TYPE=""
 export SOURCE=""
 export SPLUNK_TOKEN=""
 echo "$NGS_MP_SPLUNK_TOKEN"
-typeset -l service_type
+service_type=$(echo "$service_type" | tr '[:upper:]' '[:lower:]')
 if [[ "$service_type" == "ngs" ]]; then
      echo " service is ngs , setting the requied details  "
       SPLUNK_TOKEN=$NGS_MP_SPLUNK_TOKEN
