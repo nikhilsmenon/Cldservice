@@ -44,6 +44,7 @@ CLOUD_USER_DATA_FILE='/var/userdata.env'
 fi
 
 export bootstrap_status=0
+bootstrap_status="0"
 export environment=`grep -e ENVIRONMENT -e environment $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export deployment_name=`grep DEPLOYMENT_NAME  $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
 export zone=`grep -e AWS_DEFAULT_REGION -e zone $CLOUD_USER_DATA_FILE  | cut -d'=' -f2 | tr -d '"' | tr -d ' '`
@@ -85,7 +86,6 @@ echo "--------------------------------------------------------------------------
 #echo " setting the authorization keys based on the envirnoment"
 cp $CLOUD_USER_DATA_FILE $USER_DATA_ENV
 
-bootstrap_status="0"
 if [[ "$bootstrap_status" == "0" ]];then
 case "$environment" in
             "testing")
@@ -161,6 +161,8 @@ echo "the userdata are  are copied to /etc/env"
 
 echo "-------------------------pulling the script---------------------------------------------"
    echo "pulling postgres pop install script "
+
+if [[ "$bootstrap_status" == "0" ]];then
    if [ -f $BOOTSTRAP_DIR/install_pg.sh ]; then chmod 777 $BOOTSTRAP_DIR/install_pg.sh; bash $BOOTSTRAP_DIR/install_pg.sh ;
    #if [  -f $BOOTSTRAP_DIR/install_mp.sh  ]; then echo "removing the existing files ";rm -rf $BOOTSTRAP_DIR/install_mp.sh; fi
     else
@@ -169,7 +171,7 @@ echo "-------------------------pulling the script-------------------------------
       dos2unix $BOOTSTRAP_DIR/install_pg.sh
       bash $BOOTSTRAP_DIR/install_pg.sh
    fi
-
+fi
 
 if [ -f "/var/cwcdone.txt"  ]; then
 echo "booting  is completed "
