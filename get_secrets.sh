@@ -26,7 +26,7 @@ echo "cwcget.py doesnot exist , hence pulling"
 curl https://raw.githubusercontent.com/BinduC27/Cldservice/master/cwcget.py  -o $BOOTSTRAP_DIR/cwcget.py
 sleep 3
 fi
-CURR_HOST=`hostname -I | cut -d' ' -f1`
+export CURR_HOST=`hostname -I | cut -d' ' -f1`
 echo "$CURR_HOST"
 if [ ! -f "$BOOTSTRAP_DIR/cwckeys.env"  ]; then
 docker stop $(docker ps -aq)
