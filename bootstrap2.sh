@@ -60,7 +60,7 @@ echo "setting the hostname"
 host_ip=`hostname -I | cut -d' ' -f1`
 LABEL="-$deployment_name-"
 IP=${host_ip//./-}
-VMNAME=$CLOUD_PREFIX-$zone$LABEL$IP
+VMNAME=$CLOUD_PREFIX-$zone$LABEL$IP-$environment
 echo "hostname : $VMNAME"
 hostname $VMNAME
 sudo echo "127.0.0.1 $VMNAME" >> /etc/hosts
